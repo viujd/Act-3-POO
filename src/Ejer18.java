@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 public class Ejer18 {
     public static void main(String[] args) {
-        // Crear la ventana
+        
         JFrame frame = new JFrame("Información del Empleado");
         frame.setSize(400, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
