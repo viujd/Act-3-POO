@@ -1,95 +1,101 @@
-import javax.swing.*; // Importar bibliotecas para GUI
+import javax.swing.*;
 
-// Clase principal
 public class Ejer10 {
+    private String numeroInscripcion;
+    private String nombres;
+    private double patrimonio;
+    private int estrato;
 
-    // Método principal que ejecuta la aplicación
-    public static void main(String[] args) {
-        // Crear una ventana para la GUI
-        JFrame frame = new JFrame("Liquidación de Matrícula");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        // Crear un panel para agregar los componentes
-        JPanel panel = new JPanel();
-        frame.add(panel);
-        placeComponents(panel);
-
-        // Configurar tamaño de la ventana
-        frame.setSize(400, 300);
-        frame.setVisible(true);
+    public Ejer10(String numeroInscripcion, String nombres, double patrimonio, int estrato) {
+        this.numeroInscripcion = numeroInscripcion;
+        this.nombres = nombres;
+        this.patrimonio = patrimonio;
+        this.estrato = estrato;
     }
 
-    // Método para agregar los componentes al panel
-    private static void placeComponents(JPanel panel) {
-        panel.setLayout(null);
+    public double calcularPagoMatricula() {
+        double pago = 50000;
+        if (patrimonio > 2000000 && estrato > 3) {
+            pago += 0.03 * patrimonio;
+        }
+        return pago;
+    }
 
-        // Crear etiquetas
-        JLabel labelNI = new JLabel("Número de Inscripción:");
-        labelNI.setBounds(10, 20, 150, 25);
-        panel.add(labelNI);
+    public Ejer10() {
+        // Crear la ventana
+        JFrame frame = new JFrame("Ejercicio 10 (cap 4)");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 330);
+        frame.setLayout(null);
 
-        JTextField textNI = new JTextField(20);
-        textNI.setBounds(160, 20, 200, 25);
-        panel.add(textNI);
+        //Label y text
+        JLabel labelInscripcion = new JLabel("Número de Inscripción:");
+        labelInscripcion.setBounds(10, 20, 200, 25);
+        JTextField textInscripcion = new JTextField(20);
+        textInscripcion.setBounds(180, 20, 200, 25);
 
-        JLabel labelNOM = new JLabel("Nombres:");
-        labelNOM.setBounds(10, 50, 150, 25);
-        panel.add(labelNOM);
+        JLabel labelNombres = new JLabel("Nombres:");
+        labelNombres.setBounds(10, 60, 150, 25);
+        JTextField textNombres = new JTextField(20);
+        textNombres.setBounds(180, 60, 200, 25);
 
-        JTextField textNOM = new JTextField(20);
-        textNOM.setBounds(160, 50, 200, 25);
-        panel.add(textNOM);
+        JLabel labelPatrimonio = new JLabel("Patrimonio:");
+        labelPatrimonio.setBounds(10, 100, 150, 25);
+        JTextField textPatrimonio = new JTextField(20);
+        textPatrimonio.setBounds(180, 100, 200, 25);
 
-        JLabel labelPAT = new JLabel("Patrimonio:");
-        labelPAT.setBounds(10, 80, 150, 25);
-        panel.add(labelPAT);
+        JLabel labelEstrato = new JLabel("Estrato Social:");
+        labelEstrato.setBounds(10, 140, 150, 25);
+        JTextField textEstrato = new JTextField(20);
+        textEstrato.setBounds(180, 140, 200, 25);
 
-        JTextField textPAT = new JTextField(20);
-        textPAT.setBounds(160, 80, 200, 25);
-        panel.add(textPAT);
+        // Botón
+        JButton buttonCalcular = new JButton("Calcular Pago");
+        buttonCalcular.setBounds(125, 180, 150, 40);
 
-        JLabel labelEST = new JLabel("Estrato Social:");
-        labelEST.setBounds(10, 110, 150, 25);
-        panel.add(labelEST);
+        JTextArea textAreaResultado = new JTextArea();
+        textAreaResultado.setBounds(10, 230, 370, 40);
+        textAreaResultado.setEditable(false);
+        textAreaResultado.setLineWrap(true);  
+        textAreaResultado.setWrapStyleWord(true);
 
-        JTextField textEST = new JTextField(20);
-        textEST.setBounds(160, 110, 200, 25);
-        panel.add(textEST);
+        // Agregar componentes 
+        frame.add(labelInscripcion);
+        frame.add(textInscripcion);
+        frame.add(labelNombres);
+        frame.add(textNombres);
+        frame.add(labelPatrimonio);
+        frame.add(textPatrimonio);
+        frame.add(labelEstrato);
+        frame.add(textEstrato);
+        frame.add(buttonCalcular);
+        frame.add(textAreaResultado);
 
-        // Crear botón para calcular
-        JButton calculateButton = new JButton("Calcular Matrícula");
-        calculateButton.setBounds(10, 140, 150, 25);
-        panel.add(calculateButton);
-
-        // Crear un área de texto para mostrar el resultado
-        JTextArea resultArea = new JTextArea();
-        resultArea.setBounds(10, 170, 350, 60);
-        resultArea.setEditable(false);
-        panel.add(resultArea);
-
-        // Acción del botón de calcular
-        calculateButton.addActionListener(e -> {
+        // Acción del botón
+        buttonCalcular.addActionListener(e -> {
             try {
-                // Obtener los valores de los campos de texto
-                String NI = textNI.getText();
-                String NOM = textNOM.getText();
-                double PAT = Double.parseDouble(textPAT.getText());
-                int EST = Integer.parseInt(textEST.getText());
+                String numeroInscripcion = textInscripcion.getText();
+                String nombres = textNombres.getText();
+                double patrimonio = Double.parseDouble(textPatrimonio.getText());
+                int estrato = Integer.parseInt(textEstrato.getText());
 
-                // Inicializar el valor de matrícula
-                double PAGMAT = 50000;
+                // Crear el objeto 
+                Ejer10 estudiante = new Ejer10(numeroInscripcion, nombres, patrimonio, estrato);
 
-                // Condición para incrementar el pago de matrícula
-                if (PAT > 2000000 && EST > 3) {
-                    PAGMAT += 0.03 * PAT;
-                }
+                textAreaResultado.setText(
+                        "El estudiante con número de inscripción " + estudiante.numeroInscripcion +
+                                " y nombre " + estudiante.nombres +
+                                " debe pagar: $" + String.format("%.2f", estudiante.calcularPagoMatricula())
+                );
 
-                // Mostrar el resultado en el área de texto
-                resultArea.setText("El estudiante con número de inscripción: " + NI +
-                        "\nY nombre: " + NOM + "\nDebe pagar: $" + PAGMAT);
             } catch (NumberFormatException ex) {
-                resultArea.setText("Por favor, ingrese valores válidos.");
+                textAreaResultado.setText("Por favor, ingrese valores válidos.");
             }
         });
+        frame.setVisible(true);
+    }
+    
+    public static void main(String[] args) {
+    	new Ejer18();
     }
 }

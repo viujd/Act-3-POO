@@ -1,57 +1,73 @@
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Ejer19 {
-    public static void main(String[] args) {
-        // Crear la ventana principal
-        JFrame frame = new JFrame("Triángulo Equilátero");
-        frame.setSize(400, 250);
+    private double lado;
+
+    public Ejer19(double lado) {
+        this.lado = lado;
+    }
+
+    public double calcularPerimetro() {
+        return 3 * lado;
+    }
+
+    public double calcularAltura() {
+        return (Math.sqrt(3) / 2) * lado;
+    }
+
+    public double calcularArea() {
+        return (Math.sqrt(3) / 4) * Math.pow(lado, 2);
+    }
+
+    public Ejer19() {
+        // Crear la ventana
+        JFrame frame = new JFrame("Ejercicio 19 (cap 3)");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new GridLayout(5, 2, 10, 10));
+        frame.setSize(500, 200);
+        frame.setLayout(null);
 
-        // Crear etiquetas y campos de texto
-        JLabel ladoLabel = new JLabel("Lado del triángulo:");
-        JTextField ladoField = new JTextField();
+        // Label y text
+        JLabel labelLado = new JLabel("Lado del triángulo equilátero:");
+        labelLado.setBounds(10, 20, 200, 25);
+        JTextField textLado = new JTextField(20);
+        textLado.setBounds(220, 20, 250, 25);
 
-        JButton calcularButton = new JButton("Calcular");
-        JTextArea resultadoArea = new JTextArea();
-        resultadoArea.setEditable(false);
+        // Botón 
+        JButton buttonCalcular = new JButton("Calcular");
+        buttonCalcular.setBounds(10, 60, 150, 60);
+ 
+        JTextArea textAreaResultado = new JTextArea();
+        textAreaResultado.setBounds(180, 60, 290, 60);
+        textAreaResultado.setEditable(false);
 
-        // Agregar componentes a la ventana
-        frame.add(ladoLabel);
-        frame.add(ladoField);
-        frame.add(new JLabel()); // Espacio vacío
-        frame.add(calcularButton);
-        frame.add(new JLabel("Resultados:"));
-        frame.add(resultadoArea);
+        // Agregar componentes
+        frame.add(labelLado);
+        frame.add(textLado);
+        frame.add(buttonCalcular);
+        frame.add(textAreaResultado);
 
         // Acción del botón
-        calcularButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    double lado = Double.parseDouble(ladoField.getText());
+        buttonCalcular.addActionListener(e -> {
+            try {
+                double lado = Double.parseDouble(textLado.getText());
 
-                    // Cálculos
-                    double perimetro = 3 * lado;
-                    double altura = (Math.sqrt(3) / 2) * lado;
-                    double area = (Math.sqrt(3) / 4) * lado * lado;
+                // Crear el objeto 
+                Ejer19 triangulo = new Ejer19(lado);
 
-                    // Mostrar resultados
-                    resultadoArea.setText(
-                        "Perímetro: " + perimetro +
-                        "\nAltura: " + altura +
-                        "\nÁrea: " + area
-                    );
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Por favor ingrese un valor válido.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
+                textAreaResultado.setText(
+                    "Perímetro: " + String.format("%.2f", triangulo.calcularPerimetro()) +
+                    "\nAltura: " + String.format("%.2f", triangulo.calcularAltura()) +
+                    "\nÁrea: " + String.format("%.2f", triangulo.calcularArea())
+                );
+
+            } catch (NumberFormatException ex) {
+                textAreaResultado.setText("Por favor, ingrese un valor válido para el lado.");
             }
         });
-
-        // Mostrar la ventana
         frame.setVisible(true);
+    }
+    
+    public static void main(String[] args) {
+    	new Ejer18();
     }
 }

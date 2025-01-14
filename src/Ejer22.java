@@ -1,84 +1,86 @@
-import javax.swing.*; // Importar bibliotecas para GUI
+import javax.swing.*;
 
-// Clase principal
 public class Ejer22 {
+    private String nombre;
+    private double salarioPorHora;
+    private int horasTrabajadas;
 
-    // Método principal que ejecuta la aplicación
-    public static void main(String[] args) {
-        // Crear una ventana para la GUI
-        JFrame frame = new JFrame("Cálculo de Salario");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        // Crear un panel para agregar los componentes
-        JPanel panel = new JPanel();
-        frame.add(panel);
-        placeComponents(panel);
-
-        // Configurar tamaño de la ventana
-        frame.setSize(400, 300);
-        frame.setVisible(true);
+    public Ejer22(String nombre, double salarioPorHora, int horasTrabajadas) {
+        this.nombre = nombre;
+        this.salarioPorHora = salarioPorHora;
+        this.horasTrabajadas = horasTrabajadas;
     }
 
-    // Método para agregar los componentes al panel
-    private static void placeComponents(JPanel panel) {
-        panel.setLayout(null);
+    public double calcularSalarioMensual() {
+        return salarioPorHora * horasTrabajadas;
+    }
 
-        // Crear etiquetas
-        JLabel labelNombre = new JLabel("Nombre del Empleado:");
+    public Ejer22() {
+        // Crear la ventana
+        JFrame frame = new JFrame("Ejercicio 22 (cap 4)");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 300);
+        frame.setLayout(null);
+
+        //Label y text
+        JLabel labelNombre = new JLabel("Nombre:");
         labelNombre.setBounds(10, 20, 150, 25);
-        panel.add(labelNombre);
-
         JTextField textNombre = new JTextField(20);
-        textNombre.setBounds(160, 20, 200, 25);
-        panel.add(textNombre);
+        textNombre.setBounds(180, 20, 200, 25);
 
-        JLabel labelSalarioHora = new JLabel("Salario por Hora:");
-        labelSalarioHora.setBounds(10, 50, 150, 25);
-        panel.add(labelSalarioHora);
-
-        JTextField textSalarioHora = new JTextField(20);
-        textSalarioHora.setBounds(160, 50, 200, 25);
-        panel.add(textSalarioHora);
+        JLabel labelSalarioPorHora = new JLabel("Salario por Hora:");
+        labelSalarioPorHora.setBounds(10, 60, 150, 25);
+        JTextField textSalarioPorHora = new JTextField(20);
+        textSalarioPorHora.setBounds(180, 60, 200, 25);
 
         JLabel labelHorasTrabajadas = new JLabel("Horas Trabajadas:");
-        labelHorasTrabajadas.setBounds(10, 80, 150, 25);
-        panel.add(labelHorasTrabajadas);
-
+        labelHorasTrabajadas.setBounds(10, 100, 150, 25);
         JTextField textHorasTrabajadas = new JTextField(20);
-        textHorasTrabajadas.setBounds(160, 80, 200, 25);
-        panel.add(textHorasTrabajadas);
+        textHorasTrabajadas.setBounds(180, 100, 200, 25);
 
-        // Crear botón para calcular
-        JButton calculateButton = new JButton("Calcular Salario");
-        calculateButton.setBounds(10, 110, 150, 25);
-        panel.add(calculateButton);
+        // Botón 
+        JButton buttonCalcular = new JButton("Calcular Salario");
+        buttonCalcular.setBounds(10, 140, 150, 60);
 
-        // Crear un área de texto para mostrar el resultado
-        JTextArea resultArea = new JTextArea();
-        resultArea.setBounds(10, 140, 350, 60);
-        resultArea.setEditable(false);
-        panel.add(resultArea);
+        JTextArea textAreaResultado = new JTextArea();
+        textAreaResultado.setBounds(180, 140, 200, 60);
+        textAreaResultado.setEditable(false);
 
-        // Acción del botón de calcular
-        calculateButton.addActionListener(e -> {
+        // Agregar componentes 
+        frame.add(labelNombre);
+        frame.add(textNombre);
+        frame.add(labelSalarioPorHora);
+        frame.add(textSalarioPorHora);
+        frame.add(labelHorasTrabajadas);
+        frame.add(textHorasTrabajadas);
+        frame.add(buttonCalcular);
+        frame.add(textAreaResultado);
+
+        // Acción del botón
+        buttonCalcular.addActionListener(e -> {
             try {
-                // Obtener los valores de los campos de texto
                 String nombre = textNombre.getText();
-                double salarioHora = Double.parseDouble(textSalarioHora.getText());
+                double salarioPorHora = Double.parseDouble(textSalarioPorHora.getText());
                 int horasTrabajadas = Integer.parseInt(textHorasTrabajadas.getText());
 
-                // Calcular el salario mensual
-                double salarioMensual = salarioHora * horasTrabajadas;
+                // Crear el objeto 
+                Ejer22 empleado = new Ejer22(nombre, salarioPorHora, horasTrabajadas);
 
-                // Mostrar el resultado
+                double salarioMensual = empleado.calcularSalarioMensual();
                 if (salarioMensual > 450000) {
-                    resultArea.setText("Empleado: " + nombre + "\nSalario mensual: $" + salarioMensual);
+                    textAreaResultado.setText("Nombre: " + empleado.nombre + "\nSalario Mensual: $" + String.format("%.2f", salarioMensual));
                 } else {
-                    resultArea.setText("Empleado: " + nombre);
+                    textAreaResultado.setText("Nombre: " + empleado.nombre);
                 }
+
             } catch (NumberFormatException ex) {
-                resultArea.setText("Por favor, ingrese valores válidos.");
+                textAreaResultado.setText("Por favor, ingrese valores válidos.");
             }
         });
+        frame.setVisible(true);
+    }
+    
+    public static void main(String[] args) {
+    	new Ejer18();
     }
 }
