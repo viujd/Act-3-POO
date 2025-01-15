@@ -1,3 +1,4 @@
+package Part1;
 import javax.swing.*;
 
 public class Ejer10 {
